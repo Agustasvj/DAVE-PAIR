@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
                 },
                 // FIXED VERSION ONLY
 
-                version: [2, 3000, 1027934701],
+                version: [2, 3000, 1015901307],
                 printQRInTerminal: false,
                 logger: pino({ level: 'fatal' }).child({ level: 'fatal' }),            
                 browser: Browsers.macOS('Chrome')
