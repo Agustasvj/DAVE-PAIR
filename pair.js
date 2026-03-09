@@ -25,7 +25,9 @@ router.get('/', async (req, res) => {
     if (!num) {
         return res.json({ code: 'Please provide a phone number' });
     }
-
+    
+    num = num.replace(/[^0-9]/g, '');
+    
     async function dave_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
         try {
@@ -88,7 +90,6 @@ router.get('/', async (req, res) => {
 
             if (!Pair_Code_By_dave_Tech.authState.creds.registered) {
                 await delay(1500);
-                num = num.replace(/[^0-9]/g, '');
                 const code = await Pair_Code_By_dave_Tech.requestPairingCode(num, null);
                 if (!res.headersSent) {
                     const formatted = code.match(/.{1,4}/g)?.join('-') || code;
