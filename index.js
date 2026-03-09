@@ -22,7 +22,7 @@ if (fs.existsSync(timestampFile)) {
 }
 
 // ─── Middleware ──────────────────────────────────────────────────
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ─── API Routes ──────────────────────────────────────────────────
