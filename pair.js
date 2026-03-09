@@ -85,10 +85,10 @@ router.get('/', async (req, res) => {
                     }
                     return;
 
-                } else if (connection === 'close') {
-                    console.log("Connection closed, cleaning session");
-                    await removeFile('./temp/' + id);
-                    dave_MD_PAIR_CODE();
+                } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                        await delay(10000);
+                        dave_MD_PAIR_CODE();
+            
                 }
             });
 
