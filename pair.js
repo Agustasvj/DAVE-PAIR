@@ -52,10 +52,10 @@ router.get('/', async (req, res) => {
                         await Pair_Code_By_dave_Tech.newsletterFollow("120363366284524544@newsletter");
 
                         await delay(5000);
-                        let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
+                        let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`, 'utf8');
                         await delay(1000);
                         let b64data = Buffer.from(data).toString('base64');
-                        let sessionId = b64data;
+                        let sessionId = Buffer.from(data).toString('base64');
 
                         sessionResults[id] = { status: 'connected', sessionId };
 
@@ -79,11 +79,15 @@ router.get('/', async (req, res) => {
                     setTimeout(() => { delete sessionResults[id]; }, 300000);
 
                     await delay(100);
-                    await Pair_Code_By_dave_Tech.ws.close();
-                    return await removeFile('./temp/' + id);
+                   await Pair_Code_By_dave_Tech.ws.close();
+                   if (fs.existsSync('./temp/' + id)) {
+                       removeFile('./temp/' + id);
+                    }
+                    return;
 
-                } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
-                    await delay(10000);
+                } else if (connection === 'close') {
+                    console.log("Connection closed, cleaning session");
+                    await removeFile('./temp/' + id);
                     dave_MD_PAIR_CODE();
                 }
             });
