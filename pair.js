@@ -53,7 +53,7 @@ router.get('/', async (req, res) => {
                         let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
                         await delay(1000);
                         let b64data = Buffer.from(data).toString('base64');
-                        let sessionId = 'DAVE-X:~' + b64data;
+                        let sessionId = b64data;
 
                         sessionResults[id] = { status: 'connected', sessionId };
 
